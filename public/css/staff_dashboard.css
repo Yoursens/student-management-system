@@ -1,0 +1,267 @@
+/* ============================================================
+   TA2 Student Information System — Staff Dashboard
+   Aesthetic: Editorial Registry — Deep Navy + Electric Teal
+   Fonts: DM Serif Display (headings) + Outfit (body)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+/* ─── CSS Variables ──────────────────────────────────────────── */
+:root {
+    --navy:        #0b1120;
+    --navy-mid:    #111827;
+    --navy-soft:   #1a2540;
+    --teal:        #00d4b4;
+    --teal-dim:    rgba(0, 212, 180, 0.12);
+    --teal-glow:   rgba(0, 212, 180, 0.25);
+    --slate:       #8b9ab5;
+    --slate-light: #c4cfe4;
+    --white:       #f0f4ff;
+    --border:      rgba(0, 212, 180, 0.15);
+    --card-bg:     rgba(17, 24, 39, 0.85);
+    --shadow-teal: 0 0 24px rgba(0, 212, 180, 0.08);
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+body {
+    background: var(--navy);
+    font-family: 'Outfit', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    background-image:
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(0,212,180,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 110%, rgba(0,100,180,0.06) 0%, transparent 60%);
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-border {
+    0%, 100% { border-color: rgba(0,212,180,0.15); }
+    50%       { border-color: rgba(0,212,180,0.40); }
+}
+
+/* ─── Stat Cards ─────────────────────────────────────────────── */
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.6rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: var(--shadow-teal), inset 0 1px 0 rgba(255,255,255,0.04);
+    backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp .6s ease forwards;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--teal), transparent);
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+
+.stat-card:hover::before { opacity: 1; }
+
+.stat-card:nth-child(1) { animation-delay: .05s; }
+.stat-card:nth-child(2) { animation-delay: .15s; }
+.stat-card:nth-child(3) { animation-delay: .25s; }
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 32px rgba(0,212,180,0.12);
+    border-color: rgba(0,212,180,0.35);
+}
+
+.stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+}
+
+.stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--white);
+    letter-spacing: -0.02em;
+}
+
+.stat-label {
+    font-size: .72rem;
+    color: var(--slate);
+    margin-top: .3rem;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    font-weight: 500;
+}
+
+/* ─── Card ───────────────────────────────────────────────────── */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-teal), inset 0 1px 0 rgba(255,255,255,0.04);
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    animation: fadeUp .6s ease .35s forwards;
+    overflow: hidden;
+}
+
+.card-header {
+    background: rgba(0, 212, 180, 0.05);
+    border-bottom: 1px solid var(--border);
+    border-radius: 0 !important;
+    padding: 1rem 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: .85rem;
+    color: var(--teal);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-header .btn-outline-primary {
+    border-color: var(--teal);
+    color: var(--teal);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .3rem .9rem;
+    border-radius: 8px;
+    transition: background .2s, color .2s, box-shadow .2s;
+}
+
+.card-header .btn-outline-primary:hover {
+    background: var(--teal);
+    color: var(--navy);
+    box-shadow: 0 0 16px var(--teal-glow);
+}
+
+/* ─── Table ──────────────────────────────────────────────────── */
+.table {
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th {
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--slate);
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--border);
+    padding: .85rem 1.25rem;
+    white-space: nowrap;
+}
+
+.table tbody tr {
+    background: transparent;
+    transition: background .18s ease;
+}
+
+.table tbody tr:hover {
+    background: var(--teal-dim);
+}
+
+.table tbody tr:hover td {
+    color: var(--white);
+}
+
+.table td {
+    padding: .9rem 1.25rem;
+    vertical-align: middle;
+    color: var(--slate-light);
+    font-size: .875rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-family: 'Outfit', sans-serif;
+    background: transparent !important;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ─── Student No Code ────────────────────────────────────────── */
+.table td code {
+    font-family: 'Outfit', monospace;
+    font-size: .8rem;
+    color: var(--teal) !important;
+    background: var(--teal-dim);
+    padding: .2rem .55rem;
+    border-radius: 6px;
+    border: 1px solid rgba(0,212,180,0.2);
+    letter-spacing: .04em;
+}
+
+/* ─── Year Badge ─────────────────────────────────────────────── */
+.badge.bg-secondary {
+    background: rgba(139,154,181,0.15) !important;
+    color: var(--slate-light);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    padding: .35rem .7rem;
+    border-radius: 20px;
+    border: 1px solid rgba(139,154,181,0.25);
+    text-transform: uppercase;
+}
+
+/* ─── Eye Button ─────────────────────────────────────────────── */
+.btn-outline-secondary {
+    border-color: rgba(139,154,181,0.3);
+    color: var(--slate);
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .2s, color .2s, background .2s, box-shadow .2s;
+}
+
+.btn-outline-secondary:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    background: var(--teal-dim);
+    box-shadow: 0 0 12px var(--teal-glow);
+}
+
+/* ─── Empty State ────────────────────────────────────────────── */
+.text-muted {
+    color: var(--slate) !important;
+    font-size: .85rem;
+    letter-spacing: .04em;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: rgba(0,212,180,0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--teal); }

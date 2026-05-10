@@ -1,0 +1,239 @@
+/* ============================================================
+   TA2 Student Information System — Admin Create User
+   Aesthetic: Command Center — Obsidian + Amber Gold
+   Fonts: Fraunces (display) + Outfit (body) + DM Mono (code)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+/* ─── CSS Variables ──────────────────────────────────────────── */
+:root {
+    --obsidian:      #080c14;
+    --obsidian-mid:  #0f1623;
+    --obsidian-soft: #16202e;
+    --amber:         #f5a623;
+    --amber-dim:     rgba(245, 166, 35, 0.10);
+    --amber-glow:    rgba(245, 166, 35, 0.22);
+    --amber-border:  rgba(245, 166, 35, 0.18);
+    --slate:         #7a8ba8;
+    --slate-light:   #b8c8e0;
+    --white:         #eef2ff;
+    --border:        rgba(245, 166, 35, 0.12);
+    --card-bg:       rgba(15, 22, 35, 0.90);
+    --shadow-amber:  0 0 28px rgba(245, 166, 35, 0.06);
+    --danger:        #ef4444;
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+body {
+    background: var(--obsidian);
+    font-family: 'Outfit', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    background-image:
+        radial-gradient(ellipse 70% 45% at 15% -5%,  rgba(245,166,35,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 40% at 85% 105%, rgba(59,130,246,0.05) 0%, transparent 55%);
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Page Header Row ────────────────────────────────────────── */
+.d-flex.align-items-center.gap-3.mb-4 {
+    opacity: 0;
+    animation: fadeUp .5s ease .05s forwards;
+}
+
+/* ─── Back Button ────────────────────────────────────────────── */
+.btn-sm.btn-outline-secondary {
+    border-color: rgba(122,139,168,0.3);
+    color: var(--slate);
+    border-radius: 9px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .95rem;
+    flex-shrink: 0;
+    transition: border-color .2s, color .2s, background .2s, box-shadow .2s;
+}
+
+.btn-sm.btn-outline-secondary:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    background: var(--amber-dim);
+    box-shadow: 0 0 10px var(--amber-glow);
+}
+
+/* ─── Page Title ─────────────────────────────────────────────── */
+h5.mb-0 {
+    font-family: 'Fraunces', serif !important;
+    font-size: 1.55rem !important;
+    font-weight: 600 !important;
+    color: var(--white);
+    letter-spacing: -0.02em;
+}
+
+/* ─── Card ───────────────────────────────────────────────────── */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-amber), inset 0 1px 0 rgba(255,255,255,0.03);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    animation: fadeUp .55s ease .18s forwards;
+    overflow: hidden;
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    opacity: .4;
+}
+
+.card-body {
+    padding: 2rem !important;
+}
+
+/* ─── Form Labels ────────────────────────────────────────────── */
+.form-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--slate-light);
+    text-transform: uppercase;
+    letter-spacing: .09em;
+    margin-bottom: .45rem;
+    display: block;
+}
+
+.form-label .text-danger {
+    color: var(--danger) !important;
+    font-size: .85rem;
+}
+
+/* ─── Inputs ─────────────────────────────────────────────────── */
+.form-control,
+.form-select {
+    background: rgba(0,0,0,0.3) !important;
+    border: 1px solid rgba(245,166,35,0.15) !important;
+    border-radius: 10px !important;
+    color: var(--white) !important;
+    font-family: 'Outfit', sans-serif;
+    font-size: .875rem;
+    padding: .65rem 1rem;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.form-control::placeholder {
+    color: rgba(122,139,168,0.55);
+    font-size: .83rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: rgba(0,0,0,0.4) !important;
+    border-color: var(--amber) !important;
+    box-shadow: 0 0 0 3px var(--amber-dim) !important;
+    color: var(--white) !important;
+    outline: none;
+}
+
+/* ─── Select Dropdown ────────────────────────────────────────── */
+.form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f5a623' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 1rem center !important;
+    background-size: 12px !important;
+    padding-right: 2.5rem !important;
+    cursor: pointer;
+}
+
+.form-select option {
+    background: var(--obsidian-mid);
+    color: var(--white);
+}
+
+/* ─── Submit Button ──────────────────────────────────────────── */
+.btn-primary {
+    background: var(--amber);
+    border: none;
+    color: var(--obsidian);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: .82rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .65rem 1.4rem;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    transition: box-shadow .2s, transform .15s, background .2s;
+}
+
+.btn-primary:hover {
+    background: var(--amber);
+    color: var(--obsidian);
+    box-shadow: 0 0 22px var(--amber-glow);
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ─── Cancel Button ──────────────────────────────────────────── */
+.btn-outline-secondary:not(.btn-sm) {
+    border-color: rgba(122,139,168,0.3);
+    color: var(--slate);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: .82rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .65rem 1.2rem;
+    border-radius: 10px;
+    transition: border-color .2s, color .2s, background .2s, box-shadow .2s;
+}
+
+.btn-outline-secondary:not(.btn-sm):hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    background: var(--amber-dim);
+    box-shadow: 0 0 12px var(--amber-glow);
+}
+
+/* ─── Validation States ──────────────────────────────────────── */
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.12) !important;
+}
+
+.invalid-feedback {
+    color: var(--danger);
+    font-size: .75rem;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: .03em;
+    margin-top: .3rem;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--obsidian); }
+::-webkit-scrollbar-thumb { background: rgba(245,166,35,0.25); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--amber); }

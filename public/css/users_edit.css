@@ -1,0 +1,62 @@
+/* ============================================================
+   TA2 Student Information System — Admin Edit User
+   Extends: users_create.css
+   Add BOTH files in header for this page:
+     <link rel="stylesheet" href="/css/users_create.css">
+     <link rel="stylesheet" href="/css/users_edit.css">
+   ============================================================ */
+
+/* ─── Password Hint ──────────────────────────────────────────── */
+.form-label small.text-muted {
+    font-size: .7rem;
+    color: var(--slate) !important;
+    font-weight: 400;
+    letter-spacing: .03em;
+    text-transform: none;
+    margin-left: .3rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+/* ─── Page Title Override (Edit vs Add) ──────────────────────── */
+h5.mb-0 {
+    font-family: 'Fraunces', serif !important;
+    font-size: 1.55rem !important;
+    font-weight: 600 !important;
+    color: var(--white);
+    letter-spacing: -0.02em;
+}
+
+/* ─── Update Button — amber with checkmark feel ──────────────── */
+.btn-primary {
+    background: var(--amber);
+    border: none;
+    color: var(--obsidian);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: .82rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .65rem 1.4rem;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    transition: box-shadow .2s, transform .15s;
+}
+
+.btn-primary:hover {
+    background: var(--amber);
+    color: var(--obsidian);
+    box-shadow: 0 0 22px var(--amber-glow);
+    transform: translateY(-1px);
+}
+
+/* ─── Card top accent — amber for create, softer for edit ───── */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,166,35,0.6), transparent);
+    opacity: .5;
+}

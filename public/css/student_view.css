@@ -1,0 +1,275 @@
+/* ============================================================
+   TA2 Student Information System — Admin Student Profile View
+   Aesthetic: Command Center — Obsidian + Amber Gold
+   Fonts: Fraunces (display) + Outfit (body) + DM Mono (mono)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+/* ─── CSS Variables ──────────────────────────────────────────── */
+:root {
+    --obsidian:      #080c14;
+    --obsidian-mid:  #0f1623;
+    --obsidian-soft: #16202e;
+    --amber:         #f5a623;
+    --amber-dim:     rgba(245, 166, 35, 0.10);
+    --amber-glow:    rgba(245, 166, 35, 0.22);
+    --amber-border:  rgba(245, 166, 35, 0.18);
+    --slate:         #7a8ba8;
+    --slate-light:   #b8c8e0;
+    --white:         #eef2ff;
+    --border:        rgba(245, 166, 35, 0.12);
+    --card-bg:       rgba(15, 22, 35, 0.90);
+    --shadow-amber:  0 0 28px rgba(245, 166, 35, 0.06);
+    --text-muted:    #7a8ba8;
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+body {
+    background: var(--obsidian);
+    font-family: 'Outfit', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    background-image:
+        radial-gradient(ellipse 70% 45% at 15% -5%,  rgba(245,166,35,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 40% at 85% 105%, rgba(59,130,246,0.05) 0%, transparent 55%);
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes avatarPop {
+    from { opacity: 0; transform: scale(.85); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Page Header Row ────────────────────────────────────────── */
+.d-flex.align-items-center.gap-3.mb-4 {
+    opacity: 0;
+    animation: fadeUp .5s ease .05s forwards;
+}
+
+/* ─── Back Button ────────────────────────────────────────────── */
+.btn-sm.btn-outline-secondary:not(.d-flex ~ .d-flex .btn-sm) {
+    border-color: rgba(122,139,168,0.3);
+    color: var(--slate);
+    border-radius: 9px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .95rem;
+    flex-shrink: 0;
+    transition: border-color .2s, color .2s, background .2s, box-shadow .2s;
+}
+
+.btn-sm.btn-outline-secondary:not(.d-flex ~ .d-flex .btn-sm):hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    background: var(--amber-dim);
+    box-shadow: 0 0 10px var(--amber-glow);
+}
+
+/* ─── Page Title ─────────────────────────────────────────────── */
+h5.mb-0 {
+    font-family: 'Fraunces', serif !important;
+    font-size: 1.55rem !important;
+    font-weight: 600 !important;
+    color: var(--white);
+    letter-spacing: -0.02em;
+}
+
+/* ─── Card ───────────────────────────────────────────────────── */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-amber), inset 0 1px 0 rgba(255,255,255,0.03);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    animation: fadeUp .55s ease .18s forwards;
+    overflow: hidden;
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 8%; right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    opacity: .35;
+}
+
+.card-body {
+    padding: 2rem !important;
+}
+
+/* ─── Avatar ─────────────────────────────────────────────────── */
+.card-body .d-flex.align-items-start.gap-4 > div:first-child {
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 14px !important;
+    background: linear-gradient(135deg, var(--amber), #e06b00) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 2rem !important;
+    font-family: 'Fraunces', serif !important;
+    color: var(--obsidian) !important;
+    flex-shrink: 0 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 0 24px rgba(245,166,35,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+    animation: avatarPop .5s cubic-bezier(.34,1.56,.64,1) .3s both;
+    border: 1px solid rgba(245,166,35,0.3);
+}
+
+/* ─── Student Name ───────────────────────────────────────────── */
+.card-body h4 {
+    font-family: 'Fraunces', serif !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    color: var(--white) !important;
+    letter-spacing: -0.02em;
+    margin-bottom: .2rem !important;
+    line-height: 1.2;
+}
+
+/* ─── Student No Code ────────────────────────────────────────── */
+.card-body code {
+    font-family: 'DM Mono', monospace !important;
+    font-size: .88rem !important;
+    color: var(--amber) !important;
+    background: var(--amber-dim);
+    padding: .2rem .6rem;
+    border-radius: 6px;
+    border: 1px solid rgba(245,166,35,0.2);
+    letter-spacing: .05em;
+}
+
+/* ─── Program / Year / Section Badges ────────────────────────── */
+.badge.bg-primary {
+    background: var(--amber-dim) !important;
+    color: var(--amber) !important;
+    border: 1px solid rgba(245,166,35,0.25) !important;
+    font-family: 'Outfit', sans-serif;
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    padding: .3rem .7rem;
+    border-radius: 20px;
+    text-transform: none;
+    max-width: 260px;
+    white-space: normal;
+    line-height: 1.3;
+}
+
+.badge.bg-secondary {
+    background: rgba(122,139,168,0.13) !important;
+    color: var(--slate-light) !important;
+    border: 1px solid rgba(122,139,168,0.2) !important;
+    font-family: 'DM Mono', monospace;
+    font-size: .66rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    padding: .28rem .6rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.badge.bg-dark {
+    background: rgba(0,0,0,0.35) !important;
+    color: var(--slate-light) !important;
+    border: 1px solid var(--border) !important;
+    font-family: 'DM Mono', monospace;
+    font-size: .66rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    padding: .28rem .6rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+/* ─── Field Grid ─────────────────────────────────────────────── */
+.row.g-3 .col-md-6 > div:first-child {
+    color: var(--slate) !important;
+    font-size: .68rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: .1em !important;
+    font-family: 'Outfit', sans-serif;
+    margin-bottom: .2rem;
+}
+
+.row.g-3 .col-md-6 > div:last-child {
+    color: var(--white);
+    font-size: .9rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* ─── Divider ────────────────────────────────────────────────── */
+hr {
+    border: none !important;
+    border-top: 1px solid var(--border) !important;
+    margin: 1.75rem 0 !important;
+    opacity: 1 !important;
+}
+
+/* ─── Edit Button ────────────────────────────────────────────── */
+.btn-primary.btn-sm {
+    background: var(--amber);
+    border: none;
+    color: var(--obsidian);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: .76rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .48rem 1.1rem;
+    border-radius: 9px;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    transition: box-shadow .2s, transform .15s;
+}
+
+.btn-primary.btn-sm:hover {
+    background: var(--amber);
+    color: var(--obsidian);
+    box-shadow: 0 0 20px var(--amber-glow);
+    transform: translateY(-1px);
+}
+
+/* ─── Back to List Button ────────────────────────────────────── */
+.btn-outline-secondary.btn-sm {
+    border-color: rgba(122,139,168,0.28);
+    color: var(--slate);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: .76rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .48rem 1rem;
+    border-radius: 9px;
+    transition: border-color .2s, color .2s, background .2s, box-shadow .2s;
+}
+
+.btn-outline-secondary.btn-sm:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    background: var(--amber-dim);
+    box-shadow: 0 0 10px var(--amber-glow);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--obsidian); }
+::-webkit-scrollbar-thumb { background: rgba(245,166,35,0.25); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--amber); }

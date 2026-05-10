@@ -1,0 +1,371 @@
+/* ============================================================
+   TA2 Student Information System — Admin Dashboard
+   Aesthetic: Command Center — Obsidian + Amber Gold
+   Fonts: Fraunces (display) + Outfit (body)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+/* ─── CSS Variables ──────────────────────────────────────────── */
+:root {
+    --obsidian:      #080c14;
+    --obsidian-mid:  #0f1623;
+    --obsidian-soft: #16202e;
+    --amber:         #f5a623;
+    --amber-dim:     rgba(245, 166, 35, 0.10);
+    --amber-glow:    rgba(245, 166, 35, 0.22);
+    --amber-border:  rgba(245, 166, 35, 0.18);
+    --blue-accent:   #3b82f6;
+    --blue-dim:      rgba(59, 130, 246, 0.12);
+    --green-accent:  #22c55e;
+    --red-accent:    #ef4444;
+    --slate:         #7a8ba8;
+    --slate-light:   #b8c8e0;
+    --white:         #eef2ff;
+    --border:        rgba(245, 166, 35, 0.12);
+    --card-bg:       rgba(15, 22, 35, 0.90);
+    --shadow-amber:  0 0 28px rgba(245, 166, 35, 0.06);
+    --text-muted:    #7a8ba8;
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+body {
+    background: var(--obsidian);
+    font-family: 'Outfit', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    background-image:
+        radial-gradient(ellipse 70% 45% at 15% -5%,  rgba(245,166,35,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 40% at 85% 105%, rgba(59,130,246,0.05) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 30% at 50%  50%, rgba(245,166,35,0.02) 0%, transparent 70%);
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes topLineReveal {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+/* ─── Stat Cards ─────────────────────────────────────────────── */
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    box-shadow: var(--shadow-amber), inset 0 1px 0 rgba(255,255,255,0.03);
+    backdrop-filter: blur(14px);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp .55s ease forwards;
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .4s ease;
+}
+
+.stat-card:hover::after {
+    transform: scaleX(1);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 36px rgba(0,0,0,0.45), 0 0 28px rgba(245,166,35,0.10);
+    border-color: rgba(245,166,35,0.28);
+}
+
+.stat-card:nth-child(1) { animation-delay: .05s; }
+.stat-card:nth-child(2) { animation-delay: .12s; }
+.stat-card:nth-child(3) { animation-delay: .19s; }
+.stat-card:nth-child(4) { animation-delay: .26s; }
+
+.stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.stat-value {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--white);
+    letter-spacing: -0.02em;
+}
+
+.stat-label {
+    font-size: .7rem;
+    color: var(--slate);
+    margin-top: .28rem;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    font-weight: 500;
+}
+
+/* ─── Cards ──────────────────────────────────────────────────── */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-amber), inset 0 1px 0 rgba(255,255,255,0.03);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    animation: fadeUp .55s ease forwards;
+    overflow: hidden;
+}
+
+.col-lg-7 .card  { animation-delay: .32s; }
+.col-lg-5 .card  { animation-delay: .40s; }
+.mt-3 .card      { animation-delay: .48s; }
+
+.card-header {
+    background: rgba(245, 166, 35, 0.04);
+    border-bottom: 1px solid var(--border);
+    border-radius: 0 !important;
+    padding: .9rem 1.25rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: .8rem;
+    color: var(--amber);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-header i {
+    opacity: .75;
+}
+
+/* ─── Card Header Buttons ────────────────────────────────────── */
+.card-header .btn-outline-primary {
+    border-color: var(--amber);
+    color: var(--amber);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .28rem .8rem;
+    border-radius: 7px;
+    transition: background .2s, color .2s, box-shadow .2s;
+}
+
+.card-header .btn-outline-primary:hover {
+    background: var(--amber);
+    color: var(--obsidian);
+    box-shadow: 0 0 16px var(--amber-glow);
+}
+
+.card-header .btn-outline-secondary {
+    border-color: rgba(139,154,181,0.3);
+    color: var(--slate);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .28rem .8rem;
+    border-radius: 7px;
+    transition: border-color .2s, color .2s, background .2s;
+}
+
+.card-header .btn-outline-secondary:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+    background: var(--amber-dim);
+}
+
+/* ─── Table ──────────────────────────────────────────────────── */
+.table {
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th {
+    font-size: .66rem;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--slate);
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    background: rgba(0,0,0,0.22);
+    border-bottom: 1px solid var(--border);
+    padding: .8rem 1.2rem;
+    white-space: nowrap;
+}
+
+.table tbody tr {
+    background: transparent;
+    transition: background .16s ease;
+}
+
+.table tbody tr:hover {
+    background: var(--amber-dim);
+}
+
+.table tbody tr:hover td {
+    color: var(--white);
+}
+
+.table td {
+    padding: .85rem 1.2rem;
+    vertical-align: middle;
+    color: var(--slate-light);
+    font-size: .875rem;
+    border-bottom: 1px solid rgba(255,255,255,0.035);
+    font-family: 'Outfit', sans-serif;
+    background: transparent !important;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ─── Student No Code ────────────────────────────────────────── */
+.table td code {
+    font-family: 'Outfit', monospace;
+    font-size: .78rem;
+    color: var(--blue-accent) !important;
+    background: var(--blue-dim);
+    padding: .18rem .5rem;
+    border-radius: 5px;
+    border: 1px solid rgba(59,130,246,0.2);
+    letter-spacing: .04em;
+}
+
+/* ─── Year Badge ─────────────────────────────────────────────── */
+.badge.bg-secondary {
+    background: rgba(122,139,168,0.15) !important;
+    color: var(--slate-light);
+    font-size: .66rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    padding: .28rem .6rem;
+    border-radius: 20px;
+    border: 1px solid rgba(122,139,168,0.2);
+    text-transform: uppercase;
+    font-family: 'Outfit', sans-serif;
+}
+
+.badge.bg-primary {
+    background: var(--amber-dim) !important;
+    color: var(--amber) !important;
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    padding: .22rem .55rem;
+    border-radius: 5px;
+    border: 1px solid rgba(245,166,35,0.25);
+    text-transform: uppercase;
+    font-family: 'Outfit', monospace;
+}
+
+/* ─── Audit Log List ─────────────────────────────────────────── */
+.list-group-item {
+    background: transparent !important;
+    border-color: var(--border) !important;
+    padding: .65rem 1.25rem !important;
+    transition: background .16s ease;
+}
+
+.list-group-item:hover {
+    background: var(--amber-dim) !important;
+}
+
+.list-group-item small.text-muted {
+    color: var(--slate) !important;
+    font-size: .7rem;
+    letter-spacing: .04em;
+}
+
+.list-group-item div[style*="font-size:.78rem"] {
+    color: var(--slate) !important;
+    font-size: .78rem;
+    margin-top: .2rem;
+    line-height: 1.4;
+}
+
+/* ─── API Endpoints Card ─────────────────────────────────────── */
+.card-body div[style*="background:#1e2229"] {
+    background: rgba(0,0,0,0.3) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 10px !important;
+    padding: .85rem 1.1rem !important;
+    transition: border-color .2s, background .2s;
+}
+
+.card-body div[style*="background:#1e2229"]:hover {
+    background: var(--amber-dim) !important;
+    border-color: rgba(245,166,35,0.3) !important;
+}
+
+.card-body code[style*="color:#3b82f6"] {
+    color: var(--amber) !important;
+    font-family: 'Outfit', monospace;
+    font-size: .8rem;
+    background: var(--amber-dim);
+    padding: .18rem .5rem;
+    border-radius: 5px;
+    border: 1px solid rgba(245,166,35,0.18);
+}
+
+.card-body div[style*="font-size:.75rem"] {
+    color: var(--slate) !important;
+    font-size: .75rem;
+    margin-top: .3rem;
+}
+
+.card-body .btn-outline-primary[style*="font-size:.7rem"],
+.card-body .btn-sm.btn-outline-primary {
+    border-color: var(--amber);
+    color: var(--amber);
+    font-size: .68rem !important;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .22rem .65rem;
+    border-radius: 6px;
+    transition: background .2s, color .2s, box-shadow .2s;
+}
+
+.card-body .btn-outline-primary[style*="font-size:.7rem"]:hover,
+.card-body .btn-sm.btn-outline-primary:hover {
+    background: var(--amber);
+    color: var(--obsidian);
+    box-shadow: 0 0 14px var(--amber-glow);
+}
+
+/* ─── Text Muted Global ──────────────────────────────────────── */
+.text-muted {
+    color: var(--slate) !important;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--obsidian); }
+::-webkit-scrollbar-thumb { background: rgba(245,166,35,0.25); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--amber); }

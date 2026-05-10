@@ -1,0 +1,276 @@
+/* ============================================================
+   TA2 Student Information System — Admin Audit Logs
+   Aesthetic: Command Center — Obsidian + Amber Gold
+   Fonts: Fraunces (display) + Outfit (body) + DM Mono (code)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+/* ─── CSS Variables ──────────────────────────────────────────── */
+:root {
+    --obsidian:      #080c14;
+    --obsidian-mid:  #0f1623;
+    --obsidian-soft: #16202e;
+    --amber:         #f5a623;
+    --amber-dim:     rgba(245, 166, 35, 0.10);
+    --amber-glow:    rgba(245, 166, 35, 0.22);
+    --amber-border:  rgba(245, 166, 35, 0.18);
+    --slate:         #7a8ba8;
+    --slate-light:   #b8c8e0;
+    --white:         #eef2ff;
+    --border:        rgba(245, 166, 35, 0.12);
+    --card-bg:       rgba(15, 22, 35, 0.90);
+    --shadow-amber:  0 0 28px rgba(245, 166, 35, 0.06);
+    --text-muted:    #7a8ba8;
+
+    /* Action badge palette */
+    --badge-success:   rgba(34, 197, 94,  0.14);
+    --badge-success-c: #22c55e;
+    --badge-danger:    rgba(239, 68,  68,  0.14);
+    --badge-danger-c:  #ef4444;
+    --badge-primary:   rgba(59,  130, 246, 0.14);
+    --badge-primary-c: #60a5fa;
+    --badge-warning:   rgba(245, 166, 35,  0.14);
+    --badge-warning-c: #f5a623;
+    --badge-secondary: rgba(122, 139, 168, 0.14);
+    --badge-secondary-c: #94a3b8;
+    --badge-info:      rgba(34,  211, 238, 0.14);
+    --badge-info-c:    #22d3ee;
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+body {
+    background: var(--obsidian);
+    font-family: 'Outfit', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    background-image:
+        radial-gradient(ellipse 70% 45% at 15% -5%,  rgba(245,166,35,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 40% at 85% 105%, rgba(59,130,246,0.05) 0%, transparent 55%);
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Page Title ─────────────────────────────────────────────── */
+h5 {
+    font-family: 'Fraunces', serif !important;
+    font-size: 1.7rem !important;
+    font-weight: 600 !important;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp .5s ease .05s forwards;
+}
+
+h5 i {
+    color: var(--amber);
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+/* ─── Card ───────────────────────────────────────────────────── */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-amber), inset 0 1px 0 rgba(255,255,255,0.03);
+    backdrop-filter: blur(14px);
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp .55s ease .18s forwards;
+}
+
+/* ─── Table ──────────────────────────────────────────────────── */
+.table {
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th {
+    font-size: .66rem;
+    text-transform: uppercase;
+    letter-spacing: .13em;
+    color: var(--slate);
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    background: rgba(0,0,0,0.25);
+    border-bottom: 1px solid var(--border);
+    padding: .9rem 1.25rem;
+    white-space: nowrap;
+}
+
+.table tbody tr {
+    background: transparent;
+    transition: background .16s ease;
+}
+
+.table tbody tr:hover {
+    background: var(--amber-dim);
+}
+
+.table tbody tr:hover td {
+    color: var(--white);
+}
+
+.table td {
+    padding: .85rem 1.25rem;
+    vertical-align: middle;
+    color: var(--slate-light);
+    font-size: .875rem;
+    border-bottom: 1px solid rgba(255,255,255,0.035);
+    font-family: 'Outfit', sans-serif;
+    background: transparent !important;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ─── Timestamp Cell ─────────────────────────────────────────── */
+.table td[style*="DM Mono"] {
+    font-family: 'DM Mono', monospace !important;
+    font-size: .73rem !important;
+    color: var(--slate) !important;
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.table tbody tr:hover td[style*="DM Mono"] {
+    color: var(--slate-light) !important;
+}
+
+/* ─── User Cell ──────────────────────────────────────────────── */
+.table td[style*="font-size:.85rem"] {
+    font-size: .85rem !important;
+    color: var(--slate-light);
+    font-weight: 500;
+}
+
+/* ─── Description Cell ───────────────────────────────────────── */
+.table td[style*="font-size:.83rem"] {
+    font-size: .83rem !important;
+    color: var(--slate);
+    line-height: 1.45;
+    max-width: 360px;
+}
+
+.table tbody tr:hover td[style*="font-size:.83rem"] {
+    color: var(--slate-light);
+}
+
+/* ─── Action Badges ──────────────────────────────────────────── */
+.badge {
+    font-family: 'DM Mono', monospace !important;
+    font-size: .68rem !important;
+    font-weight: 500;
+    letter-spacing: .06em;
+    padding: .3rem .65rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+}
+
+.badge.bg-success {
+    background: var(--badge-success) !important;
+    color: var(--badge-success-c) !important;
+    border-color: rgba(34,197,94,0.22) !important;
+}
+
+.badge.bg-danger {
+    background: var(--badge-danger) !important;
+    color: var(--badge-danger-c) !important;
+    border-color: rgba(239,68,68,0.22) !important;
+}
+
+.badge.bg-primary {
+    background: var(--badge-primary) !important;
+    color: var(--badge-primary-c) !important;
+    border-color: rgba(59,130,246,0.22) !important;
+}
+
+.badge.bg-warning {
+    background: var(--badge-warning) !important;
+    color: var(--badge-warning-c) !important;
+    border-color: rgba(245,166,35,0.28) !important;
+}
+
+.badge.bg-secondary {
+    background: var(--badge-secondary) !important;
+    color: var(--badge-secondary-c) !important;
+    border-color: rgba(122,139,168,0.2) !important;
+}
+
+.badge.bg-info {
+    background: var(--badge-info) !important;
+    color: var(--badge-info-c) !important;
+    border-color: rgba(34,211,238,0.22) !important;
+}
+
+/* ─── Empty State ────────────────────────────────────────────── */
+.text-muted {
+    color: var(--slate) !important;
+}
+
+.py-5.text-center {
+    font-size: .85rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+/* ─── Card Footer / Pagination ───────────────────────────────── */
+.card-footer {
+    background: rgba(0,0,0,0.18) !important;
+    border-top: 1px solid var(--border) !important;
+    padding: .75rem 1.25rem;
+}
+
+.pagination {
+    margin: 0;
+    gap: .25rem;
+}
+
+.page-item .page-link {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--slate-light);
+    font-family: 'Outfit', sans-serif;
+    font-size: .78rem;
+    font-weight: 600;
+    border-radius: 8px !important;
+    padding: .38rem .72rem;
+    transition: background .2s, border-color .2s, color .2s, box-shadow .2s;
+    letter-spacing: .04em;
+}
+
+.page-item .page-link:hover {
+    background: var(--amber-dim);
+    border-color: var(--amber);
+    color: var(--amber);
+    box-shadow: 0 0 10px var(--amber-glow);
+}
+
+.page-item.active .page-link {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--obsidian);
+    box-shadow: 0 0 18px var(--amber-glow);
+    font-weight: 700;
+}
+
+.page-item.disabled .page-link {
+    background: transparent;
+    border-color: rgba(122,139,168,0.1);
+    color: rgba(122,139,168,0.3);
+    cursor: not-allowed;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--obsidian); }
+::-webkit-scrollbar-thumb { background: rgba(245,166,35,0.25); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--amber); }

@@ -1,0 +1,66 @@
+/* ============================================================
+   TA2 Student Information System — Admin Edit Student
+   Extends: student_create.css
+   Link BOTH in header for this page:
+     <link rel="stylesheet" href="/css/student_create.css">
+     <link rel="stylesheet" href="/css/student_edit.css">
+   ============================================================ */
+
+/* ─── Title — Student No inline code ────────────────────────── */
+h5.mb-0 code {
+    font-family: 'DM Mono', monospace !important;
+    font-size: 1.1rem !important;
+    color: var(--amber) !important;
+    background: var(--amber-dim);
+    padding: .15rem .55rem;
+    border-radius: 6px;
+    border: 1px solid rgba(245,166,35,0.22);
+    letter-spacing: .05em;
+    vertical-align: middle;
+}
+
+/* ─── Photo label hint ───────────────────────────────────────── */
+.form-label small.text-muted {
+    font-size: .68rem;
+    color: var(--slate) !important;
+    font-weight: 400;
+    letter-spacing: .02em;
+    text-transform: none;
+    margin-left: .25rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+/* ─── Update button label tweak ──────────────────────────────── */
+.btn-primary {
+    background: var(--amber);
+    border: none;
+    color: var(--obsidian);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: .82rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .65rem 1.5rem;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    transition: box-shadow .2s, transform .15s;
+}
+
+.btn-primary:hover {
+    background: var(--amber);
+    color: var(--obsidian);
+    box-shadow: 0 0 22px var(--amber-glow);
+    transform: translateY(-1px);
+}
+
+/* ─── Card top accent ────────────────────────────────────────── */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 8%; right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    opacity: .35;
+}
