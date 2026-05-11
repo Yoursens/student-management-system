@@ -1,10 +1,12 @@
 <?php echo view('partials/header', ['title' => $title]) ?>
 <link rel="stylesheet" href="/css/student_create.css">
+<link rel="stylesheet" href="/css/student_edit.css">
 </div>
 <div class="d-flex align-items-center gap-3 mb-4">
     <a href="/admin/students" class="btn btn-sm btn-outline-secondary">
         <i class="bi bi-arrow-left"></i>
     </a>
+    <div class="d-flex align-items-center gap-3 mb-4" style="justify-content:center"></div>
     <h5 class="mb-0" style="font-weight:600">Add New Student</h5>
 </div>
 

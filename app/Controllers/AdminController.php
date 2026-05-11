@@ -19,28 +19,29 @@ class AdminController extends BaseController
         $this->auditModel   = new AuditLogModel();
     }
 
+    // ─── Dashboard ────────────────────────────────────────────────
     public function dashboard(): string
     {
         $data = [
             'title'          => 'Admin Dashboard',
             'totalStudents'  => $this->studentModel->countAll(),
             'totalUsers'     => $this->userModel->countAll(),
-            'recentStudents' => $this->studentModel->orderBy('created_at', 'DESC')->limit(5)->findAll(),
-            'recentLogs'     => $this->auditModel->select('audit_logs.*, users.full_name')
-                                    ->join('users', 'users.user_id = audit_logs.user_id', 'left')
+            'recentStudents' => $this->studentModel
                                     ->orderBy('created_at', 'DESC')
-                                    ->limit(8)
+                                    ->limit(5)
                                     ->findAll(),
+            'recentLogs'     => $this->auditModel->getLogsWithUsers(8),
         ];
         return view('admin/dashboard', $data);
     }
 
+    // ─── Audit Logs ───────────────────────────────────────────────
     public function auditLogs(): string
     {
         $data = [
-            'title'  => 'Audit Logs',
-            'logs'   => $this->auditModel->getLogsWithUsers(15),
-            'pager'  => $this->auditModel->pager,
+            'title' => 'Audit Logs',
+            'logs'  => $this->auditModel->getLogsWithUsers(15),
+            'pager' => $this->auditModel->pager,
         ];
         return view('admin/audit_logs', $data);
     }

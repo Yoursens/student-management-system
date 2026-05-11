@@ -1,57 +1,86 @@
 /* ============================================================
    TA2 Student Information System — Admin Create Student
-   Aesthetic: Command Center — Obsidian + Amber Gold
-   Fonts: Fraunces (display) + Outfit (body) + DM Mono (mono)
+   Aesthetic: Soft Brutalist — Chalk + Cold Steel (Light)
+   Fonts: Bebas Neue (display) + DM Mono (body/data)
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 
 /* ─── CSS Variables ──────────────────────────────────────────── */
 :root {
-    --obsidian:      #080c14;
-    --obsidian-mid:  #0f1623;
-    --obsidian-soft: #16202e;
-    --amber:         #f5a623;
-    --amber-dim:     rgba(245, 166, 35, 0.10);
-    --amber-glow:    rgba(245, 166, 35, 0.22);
-    --amber-border:  rgba(245, 166, 35, 0.18);
-    --slate:         #7a8ba8;
-    --slate-light:   #b8c8e0;
-    --white:         #eef2ff;
-    --border:        rgba(245, 166, 35, 0.12);
-    --card-bg:       rgba(15, 22, 35, 0.90);
-    --shadow-amber:  0 0 28px rgba(245, 166, 35, 0.06);
-    --danger:        #ef4444;
+    --paper:         #f4f1ec;
+    --paper-mid:     #ede9e2;
+    --paper-deep:    #e3dfd7;
+    --chalk:         #faf8f5;
+    --ink:           #1a1916;
+    --ink-mid:       #2e2c28;
+    --ink-soft:      #4a4843;
+    --steel:         #2b6a94;
+    --steel-dim:     rgba(43, 106, 148, 0.10);
+    --steel-border:  rgba(43, 106, 148, 0.28);
+    --steel-hover:   rgba(43, 106, 148, 0.07);
+    --ash:           #8a8880;
+    --ash-mid:       #6a6862;
+    --ash-dark:      #4a4843;
+    --border:        rgba(26, 25, 22, 0.10);
+    --border-mid:    rgba(26, 25, 22, 0.18);
+    --border-strong: rgba(26, 25, 22, 0.28);
+    --card-bg:       #faf8f5;
+    --shadow-soft:   0 2px 18px rgba(26, 25, 22, 0.08);
+    --shadow-mid:    0 6px 32px rgba(26, 25, 22, 0.12);
+    --danger:        #a83030;
+    --danger-dim:    rgba(168, 48, 48, 0.08);
+    --danger-border: rgba(168, 48, 48, 0.25);
 }
 
 /* ─── Base ───────────────────────────────────────────────────── */
 body {
-    background: var(--obsidian);
-    font-family: 'Outfit', sans-serif;
-    color: var(--white);
-    min-height: 100vh;
+    background-color: var(--paper);
     background-image:
-        radial-gradient(ellipse 70% 45% at 15% -5%,  rgba(245,166,35,0.06) 0%, transparent 55%),
-        radial-gradient(ellipse 55% 40% at 85% 105%, rgba(59,130,246,0.05) 0%, transparent 55%);
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            rgba(26, 25, 22, 0.045) 39px,
+            rgba(26, 25, 22, 0.045) 40px
+        ),
+        radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(26, 25, 22, 0.04) 100%);
+    font-family: 'DM Mono', monospace;
+    color: var(--ink);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Grain overlay */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: .028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
 }
 
 /* ─── Keyframes ──────────────────────────────────────────────── */
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+@keyframes reveal {
+    from { opacity: 0; transform: translateY(14px); filter: blur(2px); }
+    to   { opacity: 1; transform: translateY(0);    filter: blur(0);   }
 }
 
 /* ─── Page Header Row ────────────────────────────────────────── */
 .d-flex.align-items-center.gap-3.mb-4 {
     opacity: 0;
-    animation: fadeUp .5s ease .05s forwards;
+    animation: reveal .5s cubic-bezier(.22, .61, .36, 1) .05s forwards;
+    justify-content: center;
 }
 
 /* ─── Back Button ────────────────────────────────────────────── */
 .btn-sm.btn-outline-secondary {
-    border-color: rgba(122,139,168,0.3);
-    color: var(--slate);
-    border-radius: 9px;
+    border: 1px solid var(--border-strong);
+    color: var(--ash-mid);
+    border-radius: 0;
     width: 34px;
     height: 34px;
     padding: 0;
@@ -60,46 +89,58 @@ body {
     justify-content: center;
     font-size: .95rem;
     flex-shrink: 0;
-    transition: border-color .2s, color .2s, background .2s, box-shadow .2s;
+    background: transparent;
+    font-family: 'DM Mono', monospace;
+    transition: border-color .18s, color .18s, background .18s;
 }
 
 .btn-sm.btn-outline-secondary:hover {
-    border-color: var(--amber);
-    color: var(--amber);
-    background: var(--amber-dim);
-    box-shadow: 0 0 10px var(--amber-glow);
+    border-color: var(--steel-border);
+    color: var(--steel);
+    background: var(--steel-dim);
+    box-shadow: none;
 }
 
 /* ─── Page Title ─────────────────────────────────────────────── */
 h5.mb-0 {
-    font-family: 'Fraunces', serif !important;
-    font-size: 1.55rem !important;
-    font-weight: 600 !important;
-    color: var(--white);
-    letter-spacing: -0.02em;
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 1.9rem !important;
+    font-weight: 400 !important;
+    color: var(--ink);
+    letter-spacing: .12em;
 }
 
 /* ─── Card ───────────────────────────────────────────────────── */
 .card {
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: var(--shadow-amber), inset 0 1px 0 rgba(255,255,255,0.03);
-    backdrop-filter: blur(14px);
+    border: 1px solid var(--border-mid);
+    border-radius: 0;
+    border-left: 3px solid var(--steel);
+    box-shadow: var(--shadow-soft);
     opacity: 0;
-    animation: fadeUp .55s ease .18s forwards;
+    animation: reveal .7s cubic-bezier(.22, .61, .36, 1) .18s forwards;
     overflow: hidden;
     position: relative;
+    margin: 0 auto;
 }
 
+/* laid-paper stripe texture */
 .card::before {
     content: '';
     position: absolute;
-    top: 0; left: 8%; right: 8%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--amber), transparent);
-    opacity: .35;
+    inset: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 5px,
+        rgba(26, 25, 22, 0.014) 5px,
+        rgba(26, 25, 22, 0.014) 6px
+    );
+    pointer-events: none;
+    z-index: 0;
 }
+
+.card > * { position: relative; z-index: 1; }
 
 .card-body {
     padding: 2rem !important;
@@ -108,110 +149,113 @@ h5.mb-0 {
 /* ─── Section Divider ────────────────────────────────────────── */
 hr {
     border: none;
-    border-top: 1px solid var(--border) !important;
+    border-top: 1px solid var(--border-mid) !important;
     margin: 1.75rem 0 !important;
     opacity: 1;
 }
 
 /* ─── Form Labels ────────────────────────────────────────────── */
 .form-label {
-    font-family: 'Outfit', sans-serif;
-    font-size: .72rem;
-    font-weight: 600;
-    color: var(--slate-light);
+    font-family: 'DM Mono', monospace;
+    font-size: .56rem;
+    font-weight: 500;
+    color: var(--ash);
     text-transform: uppercase;
-    letter-spacing: .09em;
+    letter-spacing: .18em;
     margin-bottom: .42rem;
     display: block;
 }
 
 .form-label .text-danger {
     color: var(--danger) !important;
-    font-size: .85rem;
+    font-size: .72rem;
 }
 
 .form-label small.text-muted {
-    font-size: .68rem;
-    color: var(--slate) !important;
-    font-weight: 400;
-    letter-spacing: .02em;
+    font-size: .6rem;
+    color: var(--ash) !important;
+    font-weight: 300;
+    letter-spacing: .06em;
     text-transform: none;
     margin-left: .25rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'DM Mono', monospace;
 }
 
 /* ─── Inputs & Textarea ──────────────────────────────────────── */
 .form-control,
 .form-select {
-    background: rgba(0,0,0,0.30) !important;
-    border: 1px solid rgba(245,166,35,0.14) !important;
-    border-radius: 10px !important;
-    color: var(--white) !important;
-    font-family: 'Outfit', sans-serif;
-    font-size: .875rem;
+    background: var(--chalk) !important;
+    border: 1px solid var(--border-mid) !important;
+    border-radius: 0 !important;
+    color: var(--ink) !important;
+    font-family: 'DM Mono', monospace;
+    font-size: .82rem;
+    font-weight: 300;
     padding: .62rem 1rem;
-    transition: border-color .2s, box-shadow .2s, background .2s;
+    transition: border-color .18s, box-shadow .18s, background .18s;
     -webkit-appearance: none;
     appearance: none;
+    box-shadow: none !important;
 }
 
 .form-control::placeholder {
-    color: rgba(122,139,168,0.45);
-    font-size: .82rem;
+    color: var(--ash);
+    font-size: .78rem;
+    font-weight: 300;
 }
 
 .form-control:focus,
 .form-select:focus {
-    background: rgba(0,0,0,0.42) !important;
-    border-color: var(--amber) !important;
-    box-shadow: 0 0 0 3px var(--amber-dim) !important;
-    color: var(--white) !important;
+    background: var(--chalk) !important;
+    border-color: var(--steel) !important;
+    box-shadow: 0 0 0 2px var(--steel-dim) !important;
+    color: var(--ink) !important;
     outline: none;
 }
 
 /* ─── Date Input ─────────────────────────────────────────────── */
 input[type="date"].form-control {
-    color-scheme: dark;
+    color-scheme: light;
 }
 
 input[type="date"].form-control::-webkit-calendar-picker-indicator {
-    filter: invert(70%) sepia(40%) saturate(400%) hue-rotate(5deg);
+    filter: none;
     cursor: pointer;
-    opacity: .7;
-    transition: opacity .2s;
+    opacity: .45;
+    transition: opacity .18s;
 }
 
 input[type="date"].form-control::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
+    opacity: .9;
 }
 
 /* ─── File Input ─────────────────────────────────────────────── */
 input[type="file"].form-control {
     padding: .5rem .9rem;
-    font-size: .82rem;
-    color: var(--slate-light);
+    font-size: .76rem;
+    color: var(--ash-dark);
     cursor: pointer;
 }
 
 input[type="file"].form-control::-webkit-file-upload-button {
-    background: var(--amber-dim);
-    border: 1px solid var(--amber-border);
-    border-radius: 6px;
-    color: var(--amber);
-    font-family: 'Outfit', sans-serif;
-    font-size: .72rem;
-    font-weight: 700;
-    letter-spacing: .07em;
+    background: var(--steel-dim);
+    border: 1px solid var(--steel-border);
+    border-radius: 0;
+    color: var(--steel);
+    font-family: 'DM Mono', monospace;
+    font-size: .58rem;
+    font-weight: 500;
+    letter-spacing: .12em;
     text-transform: uppercase;
     padding: .25rem .7rem;
     margin-right: .75rem;
     cursor: pointer;
-    transition: background .2s, box-shadow .2s;
+    transition: background .18s;
 }
 
 input[type="file"].form-control::-webkit-file-upload-button:hover {
-    background: rgba(245,166,35,0.18);
-    box-shadow: 0 0 8px var(--amber-glow);
+    background: rgba(43, 106, 148, 0.18);
+    box-shadow: none;
 }
 
 /* ─── Textarea ───────────────────────────────────────────────── */
@@ -223,7 +267,7 @@ textarea.form-control {
 
 /* ─── Select Dropdown Arrow ──────────────────────────────────── */
 .form-select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f5a623' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232b6a94' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
     background-repeat: no-repeat !important;
     background-position: right 1rem center !important;
     background-size: 12px !important;
@@ -232,8 +276,8 @@ textarea.form-control {
 }
 
 .form-select option {
-    background: var(--obsidian-mid);
-    color: var(--white);
+    background: var(--chalk);
+    color: var(--ink);
 }
 
 /* ─── Student No — monospace feel ────────────────────────────── */
@@ -241,36 +285,38 @@ input[name="student_no"] {
     font-family: 'DM Mono', monospace !important;
     font-size: .85rem !important;
     letter-spacing: .06em;
-    color: var(--amber) !important;
+    color: var(--steel) !important;
+    font-weight: 500;
 }
 
 input[name="student_no"]::placeholder {
-    color: rgba(245,166,35,0.35) !important;
+    color: rgba(43, 106, 148, 0.35) !important;
     font-family: 'DM Mono', monospace;
 }
 
 /* ─── Submit Button ──────────────────────────────────────────── */
 .btn-primary {
-    background: var(--amber);
-    border: none;
-    color: var(--obsidian);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    font-size: .82rem;
-    letter-spacing: .08em;
+    background: var(--steel);
+    border: 1px solid var(--steel);
+    color: var(--chalk);
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: .58rem;
+    letter-spacing: .14em;
     text-transform: uppercase;
-    padding: .65rem 1.5rem;
-    border-radius: 10px;
+    padding: .6rem 1.5rem;
+    border-radius: 0;
     display: inline-flex;
     align-items: center;
     gap: .3rem;
-    transition: box-shadow .2s, transform .15s;
+    transition: background .18s, box-shadow .18s, transform .15s;
 }
 
 .btn-primary:hover {
-    background: var(--amber);
-    color: var(--obsidian);
-    box-shadow: 0 0 22px var(--amber-glow);
+    background: #1a5a84;
+    border-color: #1a5a84;
+    color: var(--chalk);
+    box-shadow: var(--shadow-mid);
     transform: translateY(-1px);
 }
 
@@ -281,42 +327,64 @@ input[name="student_no"]::placeholder {
 
 /* ─── Cancel Button ──────────────────────────────────────────── */
 .btn-outline-secondary:not(.btn-sm) {
-    border-color: rgba(122,139,168,0.3);
-    color: var(--slate);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 600;
-    font-size: .82rem;
-    letter-spacing: .06em;
+    border: 1px solid var(--border-strong);
+    color: var(--ash-mid);
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+    font-size: .58rem;
+    letter-spacing: .12em;
     text-transform: uppercase;
-    padding: .65rem 1.2rem;
-    border-radius: 10px;
-    transition: border-color .2s, color .2s, background .2s, box-shadow .2s;
+    padding: .6rem 1.2rem;
+    border-radius: 0;
+    background: transparent;
+    transition: border-color .18s, color .18s, background .18s;
 }
 
 .btn-outline-secondary:not(.btn-sm):hover {
-    border-color: var(--amber);
-    color: var(--amber);
-    background: var(--amber-dim);
-    box-shadow: 0 0 12px var(--amber-glow);
+    border-color: var(--steel-border);
+    color: var(--steel);
+    background: var(--steel-dim);
+    box-shadow: none;
 }
 
 /* ─── Validation States ──────────────────────────────────────── */
 .form-control.is-invalid,
 .form-select.is-invalid {
     border-color: var(--danger) !important;
-    box-shadow: 0 0 0 3px rgba(239,68,68,0.12) !important;
+    box-shadow: 0 0 0 2px var(--danger-dim) !important;
+    background: rgba(168, 48, 48, 0.03) !important;
 }
 
 .invalid-feedback {
     color: var(--danger);
-    font-size: .73rem;
-    font-family: 'Outfit', sans-serif;
-    letter-spacing: .03em;
+    font-size: .62rem;
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+    letter-spacing: .08em;
+    text-transform: uppercase;
     margin-top: .28rem;
 }
 
+/* ─── Global Text Muted ──────────────────────────────────────── */
+.text-muted {
+    color: var(--ash) !important;
+    font-family: 'DM Mono', monospace;
+}
+
 /* ─── Scrollbar ──────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--obsidian); }
-::-webkit-scrollbar-thumb { background: rgba(245,166,35,0.25); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--amber); }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--paper-mid); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--steel); }
+
+/* ─── Selection ──────────────────────────────────────────────── */
+::selection {
+    background: var(--steel);
+    color: var(--chalk);
+}
+
+/* ─── Focus ──────────────────────────────────────────────────── */
+*:focus-visible {
+    outline: 1px solid var(--steel);
+    outline-offset: 2px;
+}

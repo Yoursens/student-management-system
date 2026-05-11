@@ -37,11 +37,11 @@
     <div class="card-body p-0">
         <table class="table table-hover mb-0">
             <thead>
-                <tr><th>Student No</th><th>Name</th><th>Program</th><th>Year</th><th>Actions</th></tr>
+                <tr><th>Student No</th><th>Name</th><th>Program</th><th>Year</th></tr>
             </thead>
             <tbody>
             <?php if (empty($recentStudents)): ?>
-            <tr><td colspan="5" class="text-center py-4 text-muted">No students yet.</td></tr>
+            <tr><td colspan="4" class="text-center py-4 text-muted">No students yet.</td></tr>
             <?php else: ?>
             <?php foreach ($recentStudents as $s): ?>
             <tr>
@@ -49,11 +49,6 @@
                 <td><?= esc($s['last_name']) ?>, <?= esc($s['first_name']) ?></td>
                 <td style="font-size:.85rem"><?= esc($s['program']) ?></td>
                 <td><span class="badge bg-secondary">Year <?= esc($s['year_level']) ?></span></td>
-                <td>
-                    <a href="/staff/students/view/<?= $s['student_id'] ?>" class="btn btn-sm btn-outline-secondary">
-                        <i class="bi bi-eye"></i>
-                    </a>
-                </td>
             </tr>
             <?php endforeach; ?>
             <?php endif; ?>

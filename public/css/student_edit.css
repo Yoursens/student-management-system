@@ -9,58 +9,75 @@
 /* ─── Title — Student No inline code ────────────────────────── */
 h5.mb-0 code {
     font-family: 'DM Mono', monospace !important;
-    font-size: 1.1rem !important;
-    color: var(--amber) !important;
-    background: var(--amber-dim);
+    font-size: .95rem !important;
+    color: var(--steel) !important;
+    background: var(--steel-dim);
     padding: .15rem .55rem;
-    border-radius: 6px;
-    border: 1px solid rgba(245,166,35,0.22);
-    letter-spacing: .05em;
+    border-radius: 0;
+    border: 1px solid var(--steel-border);
+    letter-spacing: .06em;
     vertical-align: middle;
+    font-weight: 500;
 }
 
 /* ─── Photo label hint ───────────────────────────────────────── */
 .form-label small.text-muted {
-    font-size: .68rem;
-    color: var(--slate) !important;
-    font-weight: 400;
-    letter-spacing: .02em;
+    font-size: .6rem;
+    color: var(--ash) !important;
+    font-weight: 300;
+    letter-spacing: .06em;
     text-transform: none;
     margin-left: .25rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'DM Mono', monospace;
 }
 
-/* ─── Update button label tweak ──────────────────────────────── */
+/* ─── Update Button ──────────────────────────────────────────── */
 .btn-primary {
-    background: var(--amber);
-    border: none;
-    color: var(--obsidian);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    font-size: .82rem;
-    letter-spacing: .08em;
+    background: var(--steel);
+    border: 1px solid var(--steel);
+    color: var(--chalk);
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: .58rem;
+    letter-spacing: .14em;
     text-transform: uppercase;
-    padding: .65rem 1.5rem;
-    border-radius: 10px;
+    padding: .6rem 1.5rem;
+    border-radius: 0;
     display: inline-flex;
     align-items: center;
     gap: .3rem;
-    transition: box-shadow .2s, transform .15s;
+    transition: background .18s, box-shadow .18s, transform .15s;
 }
 
 .btn-primary:hover {
-    background: var(--amber);
-    color: var(--obsidian);
-    box-shadow: 0 0 22px var(--amber-glow);
+    background: #1a5a84;
+    border-color: #1a5a84;
+    color: var(--chalk);
+    box-shadow: var(--shadow-mid);
     transform: translateY(-1px);
 }
 
-/* ─── Card top accent ────────────────────────────────────────── */
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ─── Card accent override ───────────────────────────────────── */
+/* Replace amber top gradient with laid-paper stripe texture */
 .card::before {
     content: '';
     position: absolute;
-    top: 0; left: 8%; right: 8%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--amber), transparent);
-    opacity: .35;
+    inset: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 5px,
+        rgba(26, 25, 22, 0.014) 5px,
+        rgba(26, 25, 22, 0.014) 6px
+    );
+    pointer-events: none;
+    z-index: 0;
+    top: unset; left: unset; right: unset;
+    height: unset;
+    opacity: 1;
 }

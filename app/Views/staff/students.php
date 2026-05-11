@@ -30,11 +30,11 @@
     <div class="card-body p-0">
         <table class="table table-hover mb-0">
             <thead>
-                <tr><th>Student No</th><th>Name</th><th>Program</th><th>Year / Section</th><th>Actions</th></tr>
+                <tr><th>Student No</th><th>Name</th><th>Program</th><th>Year / Section</th></tr>
             </thead>
             <tbody>
             <?php if (empty($students)): ?>
-            <tr><td colspan="5" class="text-center py-5 text-muted">No students found.</td></tr>
+            <tr><td colspan="4" class="text-center py-5 text-muted">No students found.</td></tr>
             <?php else: ?>
             <?php foreach ($students as $s): ?>
             <tr>
@@ -44,11 +44,6 @@
                 <td>
                     <span class="badge bg-secondary me-1">Year <?= esc($s['year_level']) ?></span>
                     <?= $s['section'] ? '<small class="text-muted">' . esc($s['section']) . '</small>' : '' ?>
-                </td>
-                <td>
-                    <a href="/staff/students/view/<?= $s['student_id'] ?>" class="btn btn-sm btn-outline-secondary">
-                        <i class="bi bi-eye me-1"></i>View
-                    </a>
                 </td>
             </tr>
             <?php endforeach; ?>

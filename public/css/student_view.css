@@ -1,44 +1,82 @@
 /* ============================================================
    TA2 Student Information System — Admin Student Profile View
-   Aesthetic: Command Center — Obsidian + Amber Gold
-   Fonts: Fraunces (display) + Outfit (body) + DM Mono (mono)
+   Aesthetic: Soft Brutalist — Chalk + Cold Steel (Light)
+   Fonts: Bebas Neue (display) + DM Mono (body/data)
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 
 /* ─── CSS Variables ──────────────────────────────────────────── */
 :root {
-    --obsidian:      #080c14;
-    --obsidian-mid:  #0f1623;
-    --obsidian-soft: #16202e;
-    --amber:         #f5a623;
-    --amber-dim:     rgba(245, 166, 35, 0.10);
-    --amber-glow:    rgba(245, 166, 35, 0.22);
-    --amber-border:  rgba(245, 166, 35, 0.18);
-    --slate:         #7a8ba8;
-    --slate-light:   #b8c8e0;
-    --white:         #eef2ff;
-    --border:        rgba(245, 166, 35, 0.12);
-    --card-bg:       rgba(15, 22, 35, 0.90);
-    --shadow-amber:  0 0 28px rgba(245, 166, 35, 0.06);
-    --text-muted:    #7a8ba8;
+    --paper:         #f4f1ec;
+    --paper-mid:     #ede9e2;
+    --paper-deep:    #e3dfd7;
+    --chalk:         #faf8f5;
+    --ink:           #1a1916;
+    --ink-mid:       #2e2c28;
+    --ink-soft:      #4a4843;
+    --steel:         #2b6a94;
+    --steel-dim:     rgba(43, 106, 148, 0.10);
+    --steel-border:  rgba(43, 106, 148, 0.28);
+    --steel-hover:   rgba(43, 106, 148, 0.07);
+    --ash:           #8a8880;
+    --ash-mid:       #6a6862;
+    --ash-dark:      #4a4843;
+    --border:        rgba(26, 25, 22, 0.10);
+    --border-mid:    rgba(26, 25, 22, 0.18);
+    --border-strong: rgba(26, 25, 22, 0.28);
+    --card-bg:       #faf8f5;
+    --shadow-soft:   0 2px 18px rgba(26, 25, 22, 0.08);
+    --shadow-mid:    0 6px 32px rgba(26, 25, 22, 0.12);
+    --text-muted:    #8a8880;
+
+    --badge-login-bg:     rgba(38, 120, 88, 0.10);
+    --badge-login-color:  #1e7a50;
+    --badge-login-bdr:    rgba(38, 120, 88, 0.25);
+
+    --badge-update-bg:    rgba(148, 98, 28, 0.10);
+    --badge-update-color: #8c5e14;
+    --badge-update-bdr:   rgba(148, 98, 28, 0.25);
+
+    --badge-user-bg:      rgba(90, 88, 82, 0.10);
+    --badge-user-color:   #6a6862;
+    --badge-user-bdr:     rgba(90, 88, 82, 0.22);
 }
 
 /* ─── Base ───────────────────────────────────────────────────── */
 body {
-    background: var(--obsidian);
-    font-family: 'Outfit', sans-serif;
-    color: var(--white);
-    min-height: 100vh;
+    background-color: var(--paper);
     background-image:
-        radial-gradient(ellipse 70% 45% at 15% -5%,  rgba(245,166,35,0.06) 0%, transparent 55%),
-        radial-gradient(ellipse 55% 40% at 85% 105%, rgba(59,130,246,0.05) 0%, transparent 55%);
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            rgba(26, 25, 22, 0.045) 39px,
+            rgba(26, 25, 22, 0.045) 40px
+        ),
+        radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(26, 25, 22, 0.04) 100%);
+    font-family: 'DM Mono', monospace;
+    color: var(--ink);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Grain overlay */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: .028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
 }
 
 /* ─── Keyframes ──────────────────────────────────────────────── */
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+@keyframes reveal {
+    from { opacity: 0; transform: translateY(14px); filter: blur(2px); }
+    to   { opacity: 1; transform: translateY(0);    filter: blur(0);   }
 }
 
 @keyframes avatarPop {
@@ -49,14 +87,15 @@ body {
 /* ─── Page Header Row ────────────────────────────────────────── */
 .d-flex.align-items-center.gap-3.mb-4 {
     opacity: 0;
-    animation: fadeUp .5s ease .05s forwards;
+    animation: reveal .5s cubic-bezier(.22, .61, .36, 1) .05s forwards;
+    justify-content: center;
 }
 
-/* ─── Back Button ────────────────────────────────────────────── */
+/* ─── Back Button (icon-only) ────────────────────────────────── */
 .btn-sm.btn-outline-secondary:not(.d-flex ~ .d-flex .btn-sm) {
-    border-color: rgba(122,139,168,0.3);
-    color: var(--slate);
-    border-radius: 9px;
+    border: 1px solid var(--border-strong);
+    color: var(--ash-mid);
+    border-radius: 0;
     width: 34px;
     height: 34px;
     padding: 0;
@@ -65,46 +104,58 @@ body {
     justify-content: center;
     font-size: .95rem;
     flex-shrink: 0;
-    transition: border-color .2s, color .2s, background .2s, box-shadow .2s;
+    background: transparent;
+    font-family: 'DM Mono', monospace;
+    transition: border-color .18s, color .18s, background .18s;
 }
 
 .btn-sm.btn-outline-secondary:not(.d-flex ~ .d-flex .btn-sm):hover {
-    border-color: var(--amber);
-    color: var(--amber);
-    background: var(--amber-dim);
-    box-shadow: 0 0 10px var(--amber-glow);
+    border-color: var(--steel-border);
+    color: var(--steel);
+    background: var(--steel-dim);
+    box-shadow: none;
 }
 
 /* ─── Page Title ─────────────────────────────────────────────── */
 h5.mb-0 {
-    font-family: 'Fraunces', serif !important;
-    font-size: 1.55rem !important;
-    font-weight: 600 !important;
-    color: var(--white);
-    letter-spacing: -0.02em;
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 1.9rem !important;
+    font-weight: 400 !important;
+    color: var(--ink);
+    letter-spacing: .12em;
 }
 
 /* ─── Card ───────────────────────────────────────────────────── */
 .card {
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: var(--shadow-amber), inset 0 1px 0 rgba(255,255,255,0.03);
-    backdrop-filter: blur(14px);
+    border: 1px solid var(--border-mid);
+    border-radius: 0;
+    border-left: 3px solid var(--steel);
+    box-shadow: var(--shadow-soft);
     opacity: 0;
-    animation: fadeUp .55s ease .18s forwards;
+    animation: reveal .7s cubic-bezier(.22, .61, .36, 1) .18s forwards;
     overflow: hidden;
     position: relative;
+    margin: auto;
 }
 
+/* laid-paper stripe texture */
 .card::before {
     content: '';
     position: absolute;
-    top: 0; left: 8%; right: 8%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--amber), transparent);
-    opacity: .35;
+    inset: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 5px,
+        rgba(26, 25, 22, 0.014) 5px,
+        rgba(26, 25, 22, 0.014) 6px
+    );
+    pointer-events: none;
+    z-index: 0;
 }
+
+.card > * { position: relative; z-index: 1; }
 
 .card-body {
     padding: 2rem !important;
@@ -114,162 +165,184 @@ h5.mb-0 {
 .card-body .d-flex.align-items-start.gap-4 > div:first-child {
     width: 80px !important;
     height: 80px !important;
-    border-radius: 14px !important;
-    background: linear-gradient(135deg, var(--amber), #e06b00) !important;
+    border-radius: 0 !important;
+    background: var(--steel-dim) !important;
+    border: 1px solid var(--steel-border) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     font-size: 2rem !important;
-    font-family: 'Fraunces', serif !important;
-    color: var(--obsidian) !important;
+    font-family: 'Bebas Neue', sans-serif !important;
+    color: var(--steel) !important;
     flex-shrink: 0 !important;
-    font-weight: 600 !important;
-    box-shadow: 0 0 24px rgba(245,166,35,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
-    animation: avatarPop .5s cubic-bezier(.34,1.56,.64,1) .3s both;
-    border: 1px solid rgba(245,166,35,0.3);
+    font-weight: 400 !important;
+    box-shadow: none;
+    animation: avatarPop .5s cubic-bezier(.34, 1.56, .64, 1) .3s both;
 }
 
 /* ─── Student Name ───────────────────────────────────────────── */
 .card-body h4 {
-    font-family: 'Fraunces', serif !important;
-    font-size: 1.5rem !important;
-    font-weight: 600 !important;
-    color: var(--white) !important;
-    letter-spacing: -0.02em;
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 2rem !important;
+    font-weight: 400 !important;
+    color: var(--ink) !important;
+    letter-spacing: .08em;
     margin-bottom: .2rem !important;
-    line-height: 1.2;
+    line-height: 1.1;
 }
 
 /* ─── Student No Code ────────────────────────────────────────── */
 .card-body code {
     font-family: 'DM Mono', monospace !important;
-    font-size: .88rem !important;
-    color: var(--amber) !important;
-    background: var(--amber-dim);
-    padding: .2rem .6rem;
-    border-radius: 6px;
-    border: 1px solid rgba(245,166,35,0.2);
-    letter-spacing: .05em;
+    font-size: .78rem !important;
+    color: var(--steel) !important;
+    background: var(--steel-dim);
+    padding: .2rem .55rem;
+    border-radius: 0;
+    border: 1px solid var(--steel-border);
+    letter-spacing: .06em;
+    font-weight: 500;
 }
 
-/* ─── Program / Year / Section Badges ────────────────────────── */
+/* ─── Program / Year / Section Badges ───────────────────────── */
 .badge.bg-primary {
-    background: var(--amber-dim) !important;
-    color: var(--amber) !important;
-    border: 1px solid rgba(245,166,35,0.25) !important;
-    font-family: 'Outfit', sans-serif;
-    font-size: .7rem;
-    font-weight: 600;
-    letter-spacing: .05em;
-    padding: .3rem .7rem;
-    border-radius: 20px;
-    text-transform: none;
+    background: var(--steel-dim) !important;
+    color: var(--steel) !important;
+    border: 1px solid var(--steel-border) !important;
+    font-family: 'DM Mono', monospace;
+    font-size: .58rem;
+    font-weight: 500;
+    letter-spacing: .12em;
+    padding: .22rem .6rem;
+    border-radius: 0;
+    text-transform: uppercase;
     max-width: 260px;
     white-space: normal;
-    line-height: 1.3;
+    line-height: 1.4;
 }
 
 .badge.bg-secondary {
-    background: rgba(122,139,168,0.13) !important;
-    color: var(--slate-light) !important;
-    border: 1px solid rgba(122,139,168,0.2) !important;
+    background: var(--paper-deep) !important;
+    color: var(--ash-mid) !important;
+    border: 1px solid var(--border-mid) !important;
     font-family: 'DM Mono', monospace;
-    font-size: .66rem;
-    font-weight: 500;
-    letter-spacing: .08em;
-    padding: .28rem .6rem;
-    border-radius: 20px;
+    font-size: .58rem;
+    font-weight: 400;
+    letter-spacing: .14em;
+    padding: .22rem .6rem;
+    border-radius: 0;
     text-transform: uppercase;
 }
 
 .badge.bg-dark {
-    background: rgba(0,0,0,0.35) !important;
-    color: var(--slate-light) !important;
-    border: 1px solid var(--border) !important;
+    background: var(--paper-deep) !important;
+    color: var(--ash-dark) !important;
+    border: 1px solid var(--border-mid) !important;
     font-family: 'DM Mono', monospace;
-    font-size: .66rem;
-    font-weight: 500;
-    letter-spacing: .08em;
-    padding: .28rem .6rem;
-    border-radius: 20px;
+    font-size: .58rem;
+    font-weight: 400;
+    letter-spacing: .14em;
+    padding: .22rem .6rem;
+    border-radius: 0;
     text-transform: uppercase;
 }
 
-/* ─── Field Grid ─────────────────────────────────────────────── */
+/* ─── Field Grid Labels ──────────────────────────────────────── */
 .row.g-3 .col-md-6 > div:first-child {
-    color: var(--slate) !important;
-    font-size: .68rem !important;
-    font-weight: 700 !important;
+    color: var(--ash) !important;
+    font-size: .56rem !important;
+    font-weight: 500 !important;
     text-transform: uppercase !important;
-    letter-spacing: .1em !important;
-    font-family: 'Outfit', sans-serif;
+    letter-spacing: .18em !important;
+    font-family: 'DM Mono', monospace;
     margin-bottom: .2rem;
 }
 
+/* ─── Field Grid Values ──────────────────────────────────────── */
 .row.g-3 .col-md-6 > div:last-child {
-    color: var(--white);
-    font-size: .9rem;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 400;
+    color: var(--ash-dark);
+    font-size: .84rem;
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
     line-height: 1.5;
 }
 
 /* ─── Divider ────────────────────────────────────────────────── */
 hr {
     border: none !important;
-    border-top: 1px solid var(--border) !important;
+    border-top: 1px solid var(--border-mid) !important;
     margin: 1.75rem 0 !important;
     opacity: 1 !important;
 }
 
 /* ─── Edit Button ────────────────────────────────────────────── */
 .btn-primary.btn-sm {
-    background: var(--amber);
-    border: none;
-    color: var(--obsidian);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    font-size: .76rem;
-    letter-spacing: .08em;
+    background: var(--steel);
+    border: 1px solid var(--steel);
+    color: var(--chalk);
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: .58rem;
+    letter-spacing: .14em;
     text-transform: uppercase;
-    padding: .48rem 1.1rem;
-    border-radius: 9px;
+    padding: .42rem 1rem;
+    border-radius: 0;
     display: inline-flex;
     align-items: center;
     gap: .3rem;
-    transition: box-shadow .2s, transform .15s;
+    transition: background .18s, box-shadow .18s, transform .15s;
 }
 
 .btn-primary.btn-sm:hover {
-    background: var(--amber);
-    color: var(--obsidian);
-    box-shadow: 0 0 20px var(--amber-glow);
+    background: #1a5a84;
+    border-color: #1a5a84;
+    color: var(--chalk);
+    box-shadow: var(--shadow-mid);
     transform: translateY(-1px);
 }
 
 /* ─── Back to List Button ────────────────────────────────────── */
 .btn-outline-secondary.btn-sm {
-    border-color: rgba(122,139,168,0.28);
-    color: var(--slate);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 600;
-    font-size: .76rem;
-    letter-spacing: .06em;
+    border: 1px solid var(--border-strong);
+    color: var(--ash-mid);
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+    font-size: .58rem;
+    letter-spacing: .12em;
     text-transform: uppercase;
-    padding: .48rem 1rem;
-    border-radius: 9px;
-    transition: border-color .2s, color .2s, background .2s, box-shadow .2s;
+    padding: .42rem 1rem;
+    border-radius: 0;
+    background: transparent;
+    transition: border-color .18s, color .18s, background .18s;
 }
 
 .btn-outline-secondary.btn-sm:hover {
-    border-color: var(--amber);
-    color: var(--amber);
-    background: var(--amber-dim);
-    box-shadow: 0 0 10px var(--amber-glow);
+    border-color: var(--steel-border);
+    color: var(--steel);
+    background: var(--steel-dim);
+    box-shadow: none;
+}
+
+/* ─── Global Text Muted ──────────────────────────────────────── */
+.text-muted {
+    color: var(--ash) !important;
+    font-family: 'DM Mono', monospace;
 }
 
 /* ─── Scrollbar ──────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--obsidian); }
-::-webkit-scrollbar-thumb { background: rgba(245,166,35,0.25); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--amber); }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--paper-mid); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--steel); }
+
+/* ─── Selection ──────────────────────────────────────────────── */
+::selection {
+    background: var(--steel);
+    color: var(--chalk);
+}
+
+/* ─── Focus ──────────────────────────────────────────────────── */
+*:focus-visible {
+    outline: 1px solid var(--steel);
+    outline-offset: 2px;
+}

@@ -6,57 +6,91 @@
      <link rel="stylesheet" href="/css/users_edit.css">
    ============================================================ */
 
+/* ─── Body Override ──────────────────────────────────────────── */
+/* Reaffirm the light paper background (no dark image override) */
+body {
+    background-color: var(--paper);
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            rgba(26, 25, 22, 0.045) 39px,
+            rgba(26, 25, 22, 0.045) 40px
+        ),
+        radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(26, 25, 22, 0.04) 100%);
+    background-size: auto, auto;
+    background-attachment: scroll;
+    background-blend-mode: normal;
+}
+
 /* ─── Password Hint ──────────────────────────────────────────── */
 .form-label small.text-muted {
-    font-size: .7rem;
-    color: var(--slate) !important;
-    font-weight: 400;
-    letter-spacing: .03em;
+    font-size: .62rem;
+    color: var(--ash) !important;
+    font-weight: 300;
+    letter-spacing: .06em;
     text-transform: none;
     margin-left: .3rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'DM Mono', monospace;
 }
 
 /* ─── Page Title Override (Edit vs Add) ──────────────────────── */
 h5.mb-0 {
-    font-family: 'Fraunces', serif !important;
-    font-size: 1.55rem !important;
-    font-weight: 600 !important;
-    color: var(--white);
-    letter-spacing: -0.02em;
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 1.9rem !important;
+    font-weight: 400 !important;
+    color: var(--ink);
+    letter-spacing: .12em;
 }
 
-/* ─── Update Button — amber with checkmark feel ──────────────── */
+/* ─── Update Button ──────────────────────────────────────────── */
 .btn-primary {
-    background: var(--amber);
-    border: none;
-    color: var(--obsidian);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    font-size: .82rem;
-    letter-spacing: .08em;
+    background: var(--steel);
+    border: 1px solid var(--steel);
+    color: var(--chalk);
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: .58rem;
+    letter-spacing: .14em;
     text-transform: uppercase;
-    padding: .65rem 1.4rem;
-    border-radius: 10px;
+    padding: .6rem 1.4rem;
+    border-radius: 0;
     display: inline-flex;
     align-items: center;
     gap: .3rem;
-    transition: box-shadow .2s, transform .15s;
+    transition: background .18s, box-shadow .18s, transform .15s;
 }
 
 .btn-primary:hover {
-    background: var(--amber);
-    color: var(--obsidian);
-    box-shadow: 0 0 22px var(--amber-glow);
+    background: #1a5a84;
+    border-color: #1a5a84;
+    color: var(--chalk);
+    box-shadow: var(--shadow-mid);
     transform: translateY(-1px);
 }
 
-/* ─── Card top accent — amber for create, softer for edit ───── */
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ─── Card accent override ───────────────────────────────────── */
+/* Replace amber top gradient with steel left border (matches dashboard) */
 .card::before {
     content: '';
     position: absolute;
-    top: 0; left: 10%; right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(245,166,35,0.6), transparent);
-    opacity: .5;
+    inset: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 5px,
+        rgba(26, 25, 22, 0.014) 5px,
+        rgba(26, 25, 22, 0.014) 6px
+    );
+    pointer-events: none;
+    z-index: 0;
+    top: unset; left: unset; right: unset;
+    height: unset;
+    opacity: 1;
 }

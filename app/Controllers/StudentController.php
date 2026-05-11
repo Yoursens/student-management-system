@@ -55,7 +55,10 @@ class StudentController extends BaseController
         if (! $student) {
             return redirect()->back()->with('error', 'Student not found.');
         }
-        return view('admin/students/view', ['title' => 'Student Details', 'student' => $student]);
+        return view('admin/students/view', [
+            'title'   => 'Student Details',
+            'student' => $student,
+        ]);
     }
 
     // ─── Create form ──────────────────────────────────────────────
@@ -99,23 +102,23 @@ class StudentController extends BaseController
         }
 
         $this->studentModel->insert([
-            'student_no'  => esc($this->request->getPost('student_no')),
-            'first_name'  => esc($this->request->getPost('first_name')),
-            'last_name'   => esc($this->request->getPost('last_name')),
-            'middle_name' => esc($this->request->getPost('middle_name')),
+            'student_no'  => $this->request->getPost('student_no'),
+            'first_name'  => $this->request->getPost('first_name'),
+            'last_name'   => $this->request->getPost('last_name'),
+            'middle_name' => $this->request->getPost('middle_name'),
             'sex'         => $this->request->getPost('sex'),
             'birthdate'   => $this->request->getPost('birthdate') ?: null,
-            'program'     => esc($this->request->getPost('program')),
+            'program'     => $this->request->getPost('program'),
             'year_level'  => (int) $this->request->getPost('year_level'),
-            'section'     => esc($this->request->getPost('section')),
-            'email'       => esc($this->request->getPost('email')),
-            'contact_no'  => esc($this->request->getPost('contact_no')),
-            'address'     => esc($this->request->getPost('address')),
+            'section'     => $this->request->getPost('section'),
+            'email'       => $this->request->getPost('email'),
+            'contact_no'  => $this->request->getPost('contact_no'),
+            'address'     => $this->request->getPost('address'),
             'photo'       => $photoName,
             'created_by'  => session()->get('user_id'),
         ]);
 
-        $sno = esc($this->request->getPost('student_no'));
+        $sno = $this->request->getPost('student_no');
         $this->auditModel->log('CREATE_STUDENT', "Added student #{$sno}");
 
         return redirect()->to('/admin/students')->with('success', 'Student added successfully.');
@@ -128,7 +131,10 @@ class StudentController extends BaseController
         if (! $student) {
             return redirect()->back()->with('error', 'Student not found.');
         }
-        return view('admin/students/edit', ['title' => 'Edit Student', 'student' => $student]);
+        return view('admin/students/edit', [
+            'title'   => 'Edit Student',
+            'student' => $student,
+        ]);
     }
 
     // ─── Update ───────────────────────────────────────────────────
@@ -161,23 +167,26 @@ class StudentController extends BaseController
             if (! in_array($photo->getMimeType(), ['image/jpeg', 'image/png', 'image/gif'])) {
                 return redirect()->back()->withInput()->with('error', 'Invalid photo format.');
             }
+            if ($photo->getSize() > 2 * 1024 * 1024) {
+                return redirect()->back()->withInput()->with('error', 'Photo too large (max 2MB).');
+            }
             $photoName = $photo->getRandomName();
             $photo->move(WRITEPATH . 'uploads/students', $photoName);
         }
 
         $this->studentModel->update($id, [
-            'student_no'  => esc($this->request->getPost('student_no')),
-            'first_name'  => esc($this->request->getPost('first_name')),
-            'last_name'   => esc($this->request->getPost('last_name')),
-            'middle_name' => esc($this->request->getPost('middle_name')),
+            'student_no'  => $this->request->getPost('student_no'),
+            'first_name'  => $this->request->getPost('first_name'),
+            'last_name'   => $this->request->getPost('last_name'),
+            'middle_name' => $this->request->getPost('middle_name'),
             'sex'         => $this->request->getPost('sex'),
             'birthdate'   => $this->request->getPost('birthdate') ?: null,
-            'program'     => esc($this->request->getPost('program')),
+            'program'     => $this->request->getPost('program'),
             'year_level'  => (int) $this->request->getPost('year_level'),
-            'section'     => esc($this->request->getPost('section')),
-            'email'       => esc($this->request->getPost('email')),
-            'contact_no'  => esc($this->request->getPost('contact_no')),
-            'address'     => esc($this->request->getPost('address')),
+            'section'     => $this->request->getPost('section'),
+            'email'       => $this->request->getPost('email'),
+            'contact_no'  => $this->request->getPost('contact_no'),
+            'address'     => $this->request->getPost('address'),
             'photo'       => $photoName,
         ]);
 
@@ -194,7 +203,10 @@ class StudentController extends BaseController
         }
 
         $this->studentModel->delete($id);
-        $this->auditModel->log('DELETE_STUDENT', "Deleted student {$student['first_name']} {$student['last_name']} (#{$student['student_no']})");
+        $this->auditModel->log(
+            'DELETE_STUDENT',
+            "Deleted student {$student['first_name']} {$student['last_name']} (#{$student['student_no']})"
+        );
 
         return redirect()->to('/admin/students')->with('success', 'Student deleted.');
     }
